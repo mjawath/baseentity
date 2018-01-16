@@ -22,7 +22,7 @@ public interface IService<T extends BaseEntity>  {
 
 
 
-    < ID extends Serializable> T findById(ID id);
+    T findById(String id);
 
     
     void setDao(BaseDAO dao);
@@ -45,7 +45,9 @@ public interface IService<T extends BaseEntity>  {
 
     T patch(T objectTopatch) ;
 
-    < ID extends Serializable> void  deleteById(ID objId);
+    void  deleteById(String objId);
 
     void delete(T obj);
+    
+    void validateEntity(T object) ;
 }

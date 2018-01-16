@@ -10,6 +10,8 @@ import java.util.UUID;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -17,6 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
  * @author LENOVO PC
  */
 @MappedSuperclass
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class BaseEntity implements Serializable{
     
     @Id

@@ -19,13 +19,13 @@ import org.springframework.data.domain.Pageable;
  */
 public class BaseService<T extends BaseEntity> implements IService<T> {
 
-    protected BaseDAO<T, String> dao;// id parameter should be gererics id extents serialisable 
+    protected BaseDAO<T, Serializable> dao;// id parameter should be gererics id extents serialisable
 
     public BaseService() {
         System.out.println("---------initialising @ BaseService----" + getClass().getSimpleName());
     }
 
-    public BaseService(BaseDAO<T,String> dao) {
+    public BaseService(BaseDAO dao) {
         this.dao = dao;
     }
 
@@ -63,8 +63,8 @@ public class BaseService<T extends BaseEntity> implements IService<T> {
     }
 
 
-    public T findById(Serializable s){    
-        return  dao.findOne((String)s);
+    public T findById(String s){    
+        return  dao.findOne(s);
     }
 
 
@@ -74,6 +74,7 @@ public class BaseService<T extends BaseEntity> implements IService<T> {
 
     public <S extends T> S save(S object) {
         try {
+            validateEntity(object);
             return dao.save(object);
         } catch (Exception e) {
             throw new DataException("persistance error", e);
@@ -81,19 +82,23 @@ public class BaseService<T extends BaseEntity> implements IService<T> {
     }
 
 
-    public T create(T object){
+    public T create(T object) {
 
+        if (object instanceof BaseEntity) {
+            final BaseEntity base = (BaseEntity) object;
+            if (base.getId() != null) {
+                throw new DataException("Creation object's payload"
+                        + " should not contain id "
+                        + "  entity error this is save ");
+//                T ety = findById(object.getId());
 
-        if(object instanceof BaseEntity && ((BaseEntity)object).getId()!=null){
-        T ety =findById(((BaseEntity)object).getId());
-           if(ety!=null){
-               throw new DataException("its looks like entity aleady eixists");
-           }
+            }
+//            else if (base != null) {
+//                throw new DataException("its looks like entity aleady eixists");
+//            }
+         return save(object);
         }
-
-
-    return save(object);
-
+        throw new DataException("its looks like entity is not a baseentity");
 
     }
 
@@ -101,7 +106,6 @@ public class BaseService<T extends BaseEntity> implements IService<T> {
 
         T ob = save(objectTopatch);
         System.out.println("successfully updated object " + objectTopatch);
-
         System.out.println("something went wrong in the update method");
         return ob;
     }
@@ -117,13 +121,17 @@ public class BaseService<T extends BaseEntity> implements IService<T> {
         return ob;
     }
 
-    public < ID extends Serializable> void deleteById(ID objId) {
+    public  void deleteById(String objId) {
 //        T t =dao.getOne(objId);
-        dao.delete((String)objId);
+        dao.delete(objId);
     }
 
     public void delete(T objId) {
 //        T t =dao.getOne(objId);
         dao.delete(objId);
+    }
+
+    public void validateEntity(T object) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -5,20 +5,18 @@
  */
 package com.mycompany.entitybase.dao;
 
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  *
  * @author LENOVO PC
  */
 @NoRepositoryBean
-public interface SFDAO<T extends Object, ID extends Serializable> extends CrudRepository<T, ID>,BaseDAO<T, ID> {
+public interface SFDAO<T extends Object, ID extends Serializable> extends BaseDAO<T, ID> {
 
-    List<T> search(String column, Object value);
+//    List<T> search(String column, Object value);
 
 //    @Query("select c from #{#entityName} c where ?1 = ?2")//https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query.spel-expressions
 //    List<T> searchEq(String column,Object value);
