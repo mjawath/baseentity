@@ -20,19 +20,10 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @MappedSuperclass
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class BaseEntity implements Serializable{
-    
-    @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    private String id;
+public interface BaseEntity<ID> extends Serializable{
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+     ID getId();
 
+     void setId(ID id);
 }

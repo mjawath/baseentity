@@ -10,6 +10,7 @@ import com.mycompany.entitybase.DataException;
 import com.mycompany.entitybase.dao.BaseDAO;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -63,8 +64,12 @@ public class BaseService<T extends BaseEntity> implements IService<T> {
     }
 
 
-    public T findById(String s){    
-        return  dao.findOne(s);
+    public T findById(String s){
+        Optional<T> one = dao.findById(s);
+        if(one.isPresent()){
+            return one.get();
+        }
+        return null;
     }
 
 
@@ -114,16 +119,15 @@ public class BaseService<T extends BaseEntity> implements IService<T> {
 
         if (objectTopatch == null)
             throw new DataException("there should exist  an object already");
+    
         T ob = save(objectTopatch);
         System.out.println("successfully updated object " + objectTopatch);
-
-        System.out.println("something went wrong in the update method");
         return ob;
     }
 
     public  void deleteById(String objId) {
 //        T t =dao.getOne(objId);
-        dao.delete(objId);
+        dao.deleteById(objId);
     }
 
     public void delete(T objId) {
