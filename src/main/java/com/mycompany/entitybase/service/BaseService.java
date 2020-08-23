@@ -15,6 +15,8 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import javax.transaction.Transactional;
+
 /**
  * @author LENOVO PC
  */
@@ -77,6 +79,7 @@ public class BaseService<T extends BaseEntity> implements IService<T> {
         this.dao = dao;
     }
 
+    @Transactional
     public <S extends T> S save(S object) {
         try {
             validateEntity(object);
@@ -85,8 +88,16 @@ public class BaseService<T extends BaseEntity> implements IService<T> {
             throw new DataException("persistance error", e);
         }
     }
+    public <S extends T> S saveInternal(S object) {
+        try {
+            validateEntity(object);
+            return dao.save(object);
+        } catch (Exception e) {
+            throw new DataException("persistance error", e);
+        }
+    }
 
-
+    @Transactional
     public T create(T object) {
 
         if (object instanceof BaseEntity) {
@@ -111,7 +122,6 @@ public class BaseService<T extends BaseEntity> implements IService<T> {
 
         T ob = save(objectTopatch);
         System.out.println("successfully updated object " + objectTopatch);
-        System.out.println("something went wrong in the update method");
         return ob;
     }
 
