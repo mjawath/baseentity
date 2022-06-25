@@ -9,6 +9,9 @@ import com.mycompany.entitybase.BaseEntity;
 import com.mycompany.entitybase.dao.BaseDAO;
 import java.io.Serializable;
 import java.util.List;
+
+import com.mycompany.entitybase.model.SearchRequest;
+import com.mycompany.entitybase.model.SearchResult;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -30,6 +33,10 @@ public interface IService<T extends BaseEntity>  {
     <S extends T> S save(S object);
 
     List<T> search(String column,Object value);
+
+    default SearchResult<T> search(SearchRequest request){
+        return new SearchResult<>(null,null,0);
+    }
 
     List<T> goToPage(int pageNo);
 

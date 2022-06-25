@@ -34,8 +34,6 @@ public class BaseService<T extends BaseEntity> implements IService<T> {
 
     public List<T> findAll() {
         return dao.findAll();
-//       System.out.println("whielf running super level service method change test");    
-//    return null;
     }
 
     public List<T> search(String column, Object value) {

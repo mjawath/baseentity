@@ -1,11 +1,8 @@
 package com.techstart;
 
 import com.mycompany.entitybase.spring.BaseRepositoryImpl;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.data.repository.config.DefaultRepositoryBaseClass;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
@@ -15,14 +12,13 @@ import java.lang.annotation.Target;
  */
 @Target(value = {ElementType.TYPE})
 @EnableJpaRepositories(repositoryBaseClass = BaseRepositoryImpl.class)
-public @interface EnableJPARepo  {
+public @interface EnableJPARepo {
 //    Class<?> repositoryBaseClass() default DefaultRepositoryBaseClass.class;
 
     @AliasFor(
-            annotation = EnableJpaRepositories.class , attribute = "basePacksages"
+            annotation = EnableJpaRepositories.class, attribute = "basePacksages"
     )
     String[] basePackages() default {};
-
 
 
 }

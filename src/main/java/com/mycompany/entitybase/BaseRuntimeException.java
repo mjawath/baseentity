@@ -5,23 +5,13 @@
  */
 package com.mycompany.entitybase;
 
-import org.springframework.http.HttpStatus;
-
 /**
- *
  * @author LENOVO PC
  */
-public class BaseRuntimeException extends RuntimeException{
-    
-    private HttpStatus http;
-    
-    public BaseRuntimeException(String message,Throwable e) {
+public class BaseRuntimeException extends RuntimeException {
+
+    public BaseRuntimeException(String message, Throwable e) {
         super(message, e);
     }
-    
-    public BaseRuntimeException(String exceptionMessge,Throwable e ,HttpStatus http) {
-        this(exceptionMessge,e);
-        this.http =http;
-    }
-    
+
 }
