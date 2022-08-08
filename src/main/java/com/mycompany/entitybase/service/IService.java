@@ -34,9 +34,7 @@ public interface IService<T extends BaseEntity>  {
 
     List<T> search(String column,Object value);
 
-    default SearchResult<T> search(SearchRequest request){
-        return new SearchResult<>(null,null,0);
-    }
+    SearchResult<T> search(SearchRequest request);
 
     List<T> goToPage(int pageNo);
 

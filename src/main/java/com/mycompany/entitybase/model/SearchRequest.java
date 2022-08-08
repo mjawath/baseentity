@@ -7,6 +7,44 @@ import java.util.List;
  */
 
 public class SearchRequest {
+    private String column;
+    private String value;
+    private String value2;
+
+    public Class getPersistenceClass() {
+        return persistenceClass;
+    }
+
+    public void setPersistenceClass(Class persistenceClass) {
+        this.persistenceClass = persistenceClass;
+    }
+
+    private Class persistenceClass;
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public String getValue2() {
+        return value2;
+    }
+
+    public void setValue2(String value2) {
+        this.value2 = value2;
+    }
+
+    public String getColumn() {
+        return column;
+    }
+
+    public void setColumn(String column) {
+        this.column = column;
+    }
+
     private List<FilterElement> filterBy;
 
     private List<SortElement> sortBy;

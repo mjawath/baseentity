@@ -8,14 +8,16 @@ package com.mycompany.entitybase.service;
 import com.mycompany.entitybase.BaseEntity;
 import com.mycompany.entitybase.DataException;
 import com.mycompany.entitybase.dao.BaseDAO;
-import java.io.Serializable;
-import java.util.List;
-import java.util.Optional;
-
+import com.mycompany.entitybase.dao.GenericCustomSearchDAO;
+import com.mycompany.entitybase.model.SearchRequest;
+import com.mycompany.entitybase.model.SearchResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import javax.transaction.Transactional;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author LENOVO PC
@@ -23,9 +25,10 @@ import javax.transaction.Transactional;
 public class BaseService<T extends BaseEntity> implements IService<T> {
 
     protected BaseDAO<T, Serializable> dao;// id parameter should be gererics id extents serialisable
+    @Autowired
+    private GenericCustomSearchDAO<T> searchDAO;
 
     public BaseService() {
-        System.out.println("---------initialising @ BaseService----" + getClass().getSimpleName());
     }
 
     public BaseService(BaseDAO dao) {
@@ -40,18 +43,22 @@ public class BaseService<T extends BaseEntity> implements IService<T> {
         return dao.search(column, value);
     }
 
-    public List<T> goToPage(int pageNo){
-        List<T> list = goToPage(pageNo,100);
+    public SearchResult<T> search(SearchRequest request){
+        return searchDAO.search(request);
+    }
+
+    public List<T> goToPage(int pageNo) {
+        List<T> list = goToPage(pageNo, 100);
         return list;
     }
 
-    public List<T> goToPage(int pageNo,int size){
-        List<T> list =dao.goToPage(pageNo,size);
+    public List<T> goToPage(int pageNo, int size) {
+        List<T> list = dao.goToPage(pageNo, size);
         return list;
     }
 
     public Page<T> searchPageable(String column, Object value, Pageable pageable) {
-        Page<T> page= dao.searchPageable(column, value, pageable);
+        Page<T> page = dao.searchPageable(column, value, pageable);
         return page;
     }
 
@@ -64,12 +71,8 @@ public class BaseService<T extends BaseEntity> implements IService<T> {
     }
 
 
-    public T findById(String s){
-        Optional<T> one = dao.findById(s);
-        if(one.isPresent()){
-            return one.get();
-        }
-        return null;
+    public T findById(String s) {
+        return dao.findById(s).orElseThrow(RuntimeException::new);
     }
 
 
@@ -86,6 +89,7 @@ public class BaseService<T extends BaseEntity> implements IService<T> {
             throw new DataException("persistance error", e);
         }
     }
+
     public <S extends T> S saveInternal(S object) {
         try {
             validateEntity(object);
@@ -110,7 +114,7 @@ public class BaseService<T extends BaseEntity> implements IService<T> {
 //            else if (base != null) {
 //                throw new DataException("its looks like entity aleady eixists");
 //            }
-         return save(object);
+            return save(object);
         }
         throw new DataException("its looks like entity is not a baseentity");
 
@@ -127,13 +131,13 @@ public class BaseService<T extends BaseEntity> implements IService<T> {
 
         if (objectTopatch == null)
             throw new DataException("there should exist  an object already");
-    
+
         T ob = save(objectTopatch);
         System.out.println("successfully updated object " + objectTopatch);
         return ob;
     }
 
-    public  void deleteById(String objId) {
+    public void deleteById(String objId) {
 //        T t =dao.getOne(objId);
         dao.deleteById(objId);
     }
