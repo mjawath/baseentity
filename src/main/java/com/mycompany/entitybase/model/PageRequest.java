@@ -4,23 +4,63 @@ import org.springframework.data.domain.AbstractPageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-public class PageRequest extends AbstractPageRequest {
+import java.util.Optional;
+
+public class PageRequest implements Pageable {
+    private int size;
     private String offSetAttribute;
     private String offSetValue;
     private String offSetType;
     private boolean isOffSetAsc;
+    private int page;
 
     public PageRequest(int page, int size) {
-        super(page, size);
+        this.page=page;
+        this.size=size;
     }
 
+
+    @Override
+    public boolean isPaged() {
+        return true;
+    }
+
+    @Override
+    public boolean isUnpaged() {
+        return false;
+    }
+
+    @Override
+    public int getPageNumber() {
+        return 0;
+    }
+
+    @Override
+    public int getPageSize() {
+        return 0;
+    }
+
+    @Override
+    public long getOffset() {
+        return 0;
+    }
 
     public Sort getSort() {
         return null;
     }
 
+    @Override
+    public Sort getSortOr(Sort sort) {
+        return null;
+    }
+
 
     public Pageable next() {
+        return null;
+    }
+
+    @Override
+    public Pageable previousOrFirst() {
         return null;
     }
 
@@ -31,6 +71,16 @@ public class PageRequest extends AbstractPageRequest {
 
     public Pageable first() {
         return null;
+    }
+
+    @Override
+    public boolean hasPrevious() {
+        return false;
+    }
+
+    @Override
+    public Optional<Pageable> toOptional() {
+        return Pageable.super.toOptional();
     }
 
 
