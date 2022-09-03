@@ -9,6 +9,7 @@ import com.mycompany.entitybase.BaseEntity;
 import com.mycompany.entitybase.dao.BaseDAO;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 import com.mycompany.entitybase.model.SearchRequest;
 import com.mycompany.entitybase.model.SearchResult;
@@ -25,7 +26,7 @@ public interface IService<T extends BaseEntity>  {
 
 
 
-    T findById(String id);
+    Optional<T> findById(String id);
 
     
     void setDao(BaseDAO dao);

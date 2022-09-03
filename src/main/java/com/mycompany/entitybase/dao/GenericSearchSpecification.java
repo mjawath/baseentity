@@ -113,9 +113,11 @@ public class GenericSearchSpecification<T> implements Specification<T> {
             query.setMaxResults(pageSize);
         });
         List<T> resultList = query.getResultList();
-        return new SearchResult<>(resultList, Optional.ofNullable(searchRequest)
-                .map(SearchRequest::getPageable)
-                .orElse(new PageRequest(1, resultList.size())), itemProjected);
+        return new SearchResult<>(resultList,
+                Optional.ofNullable(searchRequest)
+                        .map(SearchRequest::getPageable)
+                        .orElse(new PageRequest(1, resultList.size())),
+                itemProjected);
     }
 
     public Long getCount(EntityManager entityManager, SearchRequest searchRequest) {

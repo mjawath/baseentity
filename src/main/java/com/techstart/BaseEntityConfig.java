@@ -15,7 +15,8 @@ import javax.persistence.EntityManager;
 
 
 @Configuration
-@EnableJpaRepositories(repositoryBaseClass = BaseRepositoryImpl.class)
+
+
 public class BaseEntityConfig{
 
 @Autowired

@@ -20,14 +20,6 @@ public class GenericCustomSearchDAO<T> {
     public SearchResult<T> search(SearchRequest searchRequest) {
         GenericSearchSpecification<T> genericSearchSpecification = new GenericSearchSpecification<>(searchRequest.getPersistenceClass());
         Long itemProjected = genericSearchSpecification.getCount(entityManager, searchRequest);
-
-//        if (searchRequest.getColumn() != null && searchRequest.getValue() != null && searchRequest.getValue2() != null) {
-//            list.addAll(service.search(searchRequest.getColumn(),  searchRequest.getValue(), searchRequest.getValue2()));
-//        } else if (searchRequest.getColumn() != null && searchRequest.getValue() != null) {
-//            list.addAll(service.search(searchRequest.getColumn(), searchRequest.getValue()));
-//        } else {
-//            list.addAll(service.findAll());
-//        }
         return genericSearchSpecification.applyPaging(entityManager, searchRequest, itemProjected);
     }
 }

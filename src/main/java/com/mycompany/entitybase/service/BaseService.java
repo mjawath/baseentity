@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author LENOVO PC
@@ -71,8 +72,8 @@ public class BaseService<T extends BaseEntity> implements IService<T> {
     }
 
 
-    public T findById(String s) {
-        return dao.findById(s).orElseThrow(RuntimeException::new);
+    public Optional<T> findById(String s) {
+        return dao.findById(s);
     }
 
 
