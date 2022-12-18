@@ -14,7 +14,6 @@ import java.io.Serializable;
 @MappedSuperclass
 public interface BaseEntity<ID> extends Serializable {
 
-
     ID getId();
 
     void setId(ID id);

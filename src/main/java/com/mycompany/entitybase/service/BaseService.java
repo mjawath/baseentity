@@ -12,12 +12,14 @@ import com.mycompany.entitybase.dao.GenericCustomSearchDAO;
 import com.mycompany.entitybase.model.SearchRequest;
 import com.mycompany.entitybase.model.SearchResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -28,6 +30,9 @@ public class BaseService<T extends BaseEntity> implements IService<T> {
     protected BaseDAO<T, Serializable> dao;// id parameter should be gererics id extents serialisable
     @Autowired
     private GenericCustomSearchDAO<T> searchDAO;
+
+    @Value("${application.baseRest.allowCreateWithId:true}")
+    private final boolean allowCreateWithId = Boolean.TRUE;
 
     public BaseService() {
     }
@@ -44,7 +49,7 @@ public class BaseService<T extends BaseEntity> implements IService<T> {
         return dao.search(column, value);
     }
 
-    public SearchResult<T> search(SearchRequest request){
+    public SearchResult<T> search(SearchRequest request) {
         return searchDAO.search(request);
     }
 
@@ -87,7 +92,7 @@ public class BaseService<T extends BaseEntity> implements IService<T> {
             validateEntity(object);
             return dao.save(object);
         } catch (Exception e) {
-            throw new DataException("persistance error", e);
+            throw new DataException("persistence error", e);
         }
     }
 
@@ -102,29 +107,26 @@ public class BaseService<T extends BaseEntity> implements IService<T> {
 
     @Transactional
     public T create(T object) {
-
-        if (object instanceof BaseEntity) {
-            final BaseEntity base = (BaseEntity) object;
-            if (base.getId() != null) {
-                throw new DataException("Creation object's payload"
-                        + " should not contain id "
-                        + "  entity error this is save ");
-//                T ety = findById(object.getId());
-
-            }
-//            else if (base != null) {
-//                throw new DataException("its looks like entity aleady eixists");
-//            }
-            return save(object);
+        if (Objects.isNull(object)) {
+            throw new DataException("Payload object cannot be null");
         }
-        throw new DataException("its looks like entity is not a baseentity");
 
+        if (object.getId() != null) {
+            if (!allowCreateWithId) {
+                throw new DataException("For creation of object, object's payload"
+                        + " should not contain id ");
+            }
+            if (findById(String.valueOf(object.getId())).isPresent()) {
+                throw new DataException(" entity already exists");
+            }
+        }
+
+        return save(object);
     }
 
     public T update(T objectTopatch) {
 
         T ob = save(objectTopatch);
-        System.out.println("successfully updated object " + objectTopatch);
         return ob;
     }
 

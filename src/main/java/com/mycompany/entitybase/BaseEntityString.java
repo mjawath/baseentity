@@ -14,7 +14,6 @@ import java.util.Date;
 
 @MappedSuperclass
 public class BaseEntityString implements BaseEntity<String> {
-
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
