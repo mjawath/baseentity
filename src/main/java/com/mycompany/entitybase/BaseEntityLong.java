@@ -2,8 +2,8 @@ package com.mycompany.entitybase;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
 public class BaseEntityLong implements BaseEntity<Long> {
 

@@ -7,10 +7,10 @@ package com.mycompany.entitybase.dao;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.annotation.PostConstruct;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import jakarta.annotation.PostConstruct;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 
 public class BaseDAOJPA<T, ID extends Serializable> {
 
@@ -41,12 +41,12 @@ public class BaseDAOJPA<T, ID extends Serializable> {
         return obj;
     }
 
-//    @Override
-    public List<T> search(String column,String value) {
+    //    @Override
+    public List<T> search(String column, String value) {
         return null;
     }
 
-    public List<T> search(){
+    public List<T> search() {
         return null;
     }
 
@@ -76,8 +76,8 @@ public class BaseDAOJPA<T, ID extends Serializable> {
         //TODO - overrides
     }
 
-//    @Override
+    //    @Override
     public List<T> findAll() {
-            return null;
+        return null;
     }
 }

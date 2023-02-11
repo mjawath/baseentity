@@ -5,7 +5,7 @@
  */
 package com.mycompany.entitybase;
 
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.MappedSuperclass;
 import java.io.Serializable;
 
 /**

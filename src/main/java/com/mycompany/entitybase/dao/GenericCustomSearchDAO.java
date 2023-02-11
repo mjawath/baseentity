@@ -5,7 +5,7 @@ import com.mycompany.entitybase.model.SearchResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 @Component// generic dao for search
 public class GenericCustomSearchDAO<T> {
