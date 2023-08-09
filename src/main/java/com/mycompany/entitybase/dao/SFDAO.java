@@ -8,6 +8,7 @@ package com.mycompany.entitybase.dao;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
