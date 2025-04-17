@@ -1,9 +1,10 @@
 package com.mycompany.entitybase;
 
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -12,7 +13,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
-public class BaseEntityLong implements BaseEntity<Long> {
+public class BaseEntityCustomId implements BaseEntity<Long> {
 
 
     @CreatedDate
@@ -27,7 +28,8 @@ public class BaseEntityLong implements BaseEntity<Long> {
     private Boolean isActive = Boolean.TRUE;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "custom-id-generator")
+    @GenericGenerator(name = "custom-id-generator", strategy = "com.mycompany.entitybase.CustomIdGenerator")
     private Long id;
 
     @Override

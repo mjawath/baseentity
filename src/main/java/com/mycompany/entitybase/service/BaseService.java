@@ -95,6 +95,17 @@ public class BaseService<T extends BaseEntity> implements IService<T> {
             throw new DataException("persistence error", e);
         }
     }
+    @Transactional
+    public <S extends T> List<S>  saveAll(List<S> objects) {
+        try {
+            for (T t : objects) {
+                validateEntity(t);
+            }
+            return dao.saveAll(objects);
+        } catch (Exception e) {
+            throw new DataException("persistence error", e);
+        }
+    }
 
     public <S extends T> S saveInternal(S object) {
         try {
@@ -148,6 +159,11 @@ public class BaseService<T extends BaseEntity> implements IService<T> {
     public void delete(T objId) {
 //        T t =dao.getOne(objId);
         dao.delete(objId);
+    }
+
+
+    public void deleteAll() {
+        dao.deleteAll();
     }
 
     public void validateEntity(T object) {

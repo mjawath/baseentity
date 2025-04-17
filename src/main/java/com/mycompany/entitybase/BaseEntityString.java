@@ -27,6 +27,8 @@ public class BaseEntityString implements BaseEntity<String> {
     private String createdBy;
     @LastModifiedBy
     private String lastModifiedBy;
+    //active status
+    private Boolean isActive = Boolean.TRUE;
 
     @Override
     public String getId() {
@@ -36,5 +38,45 @@ public class BaseEntityString implements BaseEntity<String> {
     @Override
     public void setId(String s) {
     this.id = s;
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public LocalDateTime getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(LocalDateTime updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 }
