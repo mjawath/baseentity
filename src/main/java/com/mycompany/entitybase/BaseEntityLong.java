@@ -16,9 +16,9 @@ public class BaseEntityLong implements BaseEntity<Long> {
 
 
     @CreatedDate
-    private LocalDateTime createdDate;
+    private LocalDateTime createdAt;
     @LastModifiedDate
-    private LocalDateTime updatedDate;
+    private LocalDateTime updatedAt;
     @CreatedBy
     private String createdBy;
     @LastModifiedBy

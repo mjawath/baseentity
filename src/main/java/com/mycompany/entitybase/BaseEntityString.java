@@ -20,15 +20,17 @@ public class BaseEntityString implements BaseEntity<String> {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     protected String id;
     @CreatedDate
-    private LocalDateTime createdDate;
+    private LocalDateTime createdAt;
     @LastModifiedDate
-    private LocalDateTime updatedDate;
+    private LocalDateTime updatedAt;
     @CreatedBy
     private String createdBy;
     @LastModifiedBy
     private String lastModifiedBy;
     //active status
     private Boolean isActive = Boolean.TRUE;
+    private LocalDateTime activeSince;
+    private boolean active;
 
     @Override
     public String getId() {
@@ -40,22 +42,19 @@ public class BaseEntityString implements BaseEntity<String> {
     this.id = s;
     }
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
 
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
-
-    public LocalDateTime getUpdatedDate() {
-        return updatedDate;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
-
-    public void setUpdatedDate(LocalDateTime updatedDate) {
-        this.updatedDate = updatedDate;
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
-
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
     public String getCreatedBy() {
         return createdBy;
     }
