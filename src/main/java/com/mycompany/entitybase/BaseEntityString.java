@@ -30,7 +30,7 @@ public class BaseEntityString implements BaseEntity<String> {
     //active status
     private Boolean isActive = Boolean.TRUE;
     private LocalDateTime activeSince;
-    private boolean active;
+    private Boolean active;
 
     @Override
     public String getId() {
@@ -77,5 +77,13 @@ public class BaseEntityString implements BaseEntity<String> {
 
     public void setActive(Boolean active) {
         isActive = active;
+    }
+
+    public LocalDateTime getActiveSince() {
+        return activeSince;
+    }
+
+    public void setActiveSince(LocalDateTime activeSince) {
+        this.activeSince = activeSince;
     }
 }
