@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
+import com.mycompany.entitybase.dao.SFDAO;
 import com.mycompany.entitybase.model.SearchRequest;
 import com.mycompany.entitybase.model.SearchResult;
 import org.springframework.data.domain.Page;
@@ -29,7 +30,7 @@ public interface IService<T extends BaseEntity>  {
     Optional<T> findById(String id);
 
     
-    void setDao(BaseDAO dao);
+    void setDao(SFDAO dao);
 
     <S extends T> S save(S object);
 

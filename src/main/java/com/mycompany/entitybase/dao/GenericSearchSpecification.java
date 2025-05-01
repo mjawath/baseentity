@@ -5,6 +5,7 @@ import com.mycompany.entitybase.model.FilterElement;
 import com.mycompany.entitybase.model.PageRequest;
 import com.mycompany.entitybase.model.SearchRequest;
 import com.mycompany.entitybase.model.SearchResult;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.domain.Specification;
 
 import jakarta.persistence.EntityManager;
@@ -20,6 +21,8 @@ import java.util.stream.Collectors;
 //@Component//generic search component
 public class GenericSearchSpecification<T> implements Specification<T> {
     private Class<T> persistentClass;
+
+    private int pageSize=100;
 
     public GenericSearchSpecification(Class persistentClass) {
         this.persistentClass = persistentClass;
@@ -112,6 +115,8 @@ public class GenericSearchSpecification<T> implements Specification<T> {
             }
             query.setMaxResults(pageSize);
         });
+        query.setMaxResults(pageSize);
+
         List<T> resultList = query.getResultList();
         return new SearchResult<>(resultList,
                 Optional.ofNullable(searchRequest)
