@@ -50,6 +50,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
     private List<T> searchEq(String column, Object value) {
         Query query = entityManager.createQuery("select c from " + getDomainClass().getSimpleName() + " c where " + column + " = ?1");
         query.setParameter(1, value);
+
         return query.getResultList();
     }
 
@@ -94,6 +95,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
     }
 
     public List<T> goToPage(int pageNo, int size) {
+        TenantAware contextBean = getContextBean();
         Pageable pa = PageRequest.of(pageNo, size);
         return findAll(pa).getContent();
     }
@@ -104,4 +106,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
     }
 
 
+    public TenantAware getContextBean(){
+        return null;
+    }
 }
