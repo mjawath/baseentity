@@ -24,6 +24,8 @@ import java.util.List;
 public class BaseRepositoryImpl<T, ID extends Serializable>
         extends SimpleJpaRepository<T, ID> implements SFDAO<T, ID> {
 
+    private static final int DEFAULT_PAGE_SIZE = 50;
+
     private EntityManager entityManager;
 
     // There are two constructors to choose from, either can be used.
@@ -50,7 +52,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
     private List<T> searchEq(String column, Object value) {
         Query query = entityManager.createQuery("select c from " + getDomainClass().getSimpleName() + " c where " + column + " = ?1");
         query.setParameter(1, value);
-
+        query.setMaxResults(DEFAULT_PAGE_SIZE);
         return query.getResultList();
     }
 
@@ -59,6 +61,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
     private List<T> searchLike(String column, String value) {
         Query query = entityManager.createQuery("select c from " + getDomainClass().getSimpleName() + " c where " + column + " like ?1");
         query.setParameter(1, value);
+        query.setMaxResults(DEFAULT_PAGE_SIZE);
         return query.getResultList();
     }
 
@@ -84,7 +87,7 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
 
         cq.where(p);
         TypedQuery<T> tq = entityManager.createQuery(cq);
-
+        tq.setMaxResults(DEFAULT_PAGE_SIZE);
         return readPage(tq, getDomainClass(), pageable, spec);
     }
 

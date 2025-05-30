@@ -2,6 +2,7 @@ package com.mycompany.entitybase.spring;
 
 public class TenantAware {
 
+    private String userId;
     private String tenantId;
     private String tenantName;
 
@@ -19,5 +20,13 @@ public class TenantAware {
 
     public void setTenantId(String tenantId) {
         this.tenantId = tenantId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }
